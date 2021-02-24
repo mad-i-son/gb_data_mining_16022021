@@ -15,21 +15,11 @@
 
 """
 
-# from pathlib import Path
-# import requests
-# import bs4
-# url = "https://magnit.ru/promo/"
-# response = requests.get(url)
-# file_path = Path(__file__).parent.joinpath("magnit.html")
-#
-# soup = bs4.BeautifulSoup(response.text, "lxml")
-# print(1)
-
-from pathlib import Path
 import requests
 from urllib.parse import urljoin
 import bs4
 import pymongo
+import time
 
 
 class MagnitParse:
@@ -38,15 +28,33 @@ class MagnitParse:
         self.db = db_client["gb_data_mining_16022021"]
 
     def _get_response(self, url):
-        # TODO: НАПИСАТЬ ОБРАБОТКУ ОШИБОК
-        response = requests.get(url)
-        return response
+        time_sleep_counts = 0
+        while True:
+            response = requests.get(url)
+            if response.status_code == 200:
+                return response
+            elif response.status_code != 200:
+                time_sleep_counts += 1
+                print(response.status_code)
+                if time_sleep_counts == 3:
+                    break
+                else:
+                    time.sleep(0.5)
 
     def _get_soup(self, url):
-        # TODO: НАПИСАТЬ ОБРАБОТКУ ОШИБОК
-        response = self._get_response(url)
-        soup = bs4.BeautifulSoup(response.text, "lxml")
-        return soup
+        time_sleep_counts = 0
+        while True:
+            response = self._get_response(url)
+            if response.status_code == 200:
+                soup = bs4.BeautifulSoup(response.text, "lxml")
+                return soup
+            elif response.status_code != 200:
+                time_sleep_counts += 1
+                print(response.status_code)
+                if time_sleep_counts == 3:
+                    break
+                else:
+                    time.sleep(0.5)
 
     def _template(self):
         return {
@@ -75,7 +83,6 @@ class MagnitParse:
     def save(self, data: dict):
         collection = self.db["magnit"]
         collection.insert_one(data)
-        print(1)
 
 
 if __name__ == "__main__":
