@@ -77,4 +77,4 @@ class AutoyoulaSpider(scrapy.Spider):
                 data[key] = selector(response)
             except (ValueError, AttributeError):
                 continue
-        self.db_client["gb_parse_15_02_2021"][self.name].insert_one(data)
+        self.db_client["gb_parse_16_02_2021"][self.name].insert_one(data)
