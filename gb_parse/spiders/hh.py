@@ -8,7 +8,7 @@ class HhSpider(scrapy.Spider):
     name = "hh"
     allowed_domains = ["hh.ru"]
     start_urls = [
-        "https://krasnodar.hh.ru/search/vacancy?schedule=remote&L_profession_id=0&area=113"
+        "https://orenburg.hh.ru/search/vacancy?schedule=remote&L_profession_id=0&area=113"
     ]
 
     def _get_follow_xpath(self, response, xpath, callback):
