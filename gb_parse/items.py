@@ -37,3 +37,7 @@ class InstaTag(Insta):
 
 class InstaPost(Insta):
     pass
+
+
+class InstaUser(Insta):
+    pass
