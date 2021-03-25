@@ -62,7 +62,8 @@ class InstagramSpider(scrapy.Spider):
 
 
 class InstTag:
-    query_hash = "9b498c08113f1e09617a1703c22b2f32"
+    #query_hash = "9b498c08113f1e09617a1703c22b2f32"
+    query_hash = "13893662e2e7e5b01f81fe1c4eb3fdb5"
 
     def __init__(self, hashtag: dict):
         self.variables = {

@@ -21,8 +21,12 @@ class GbParseMongoPipeline:
         client = MongoClient()
         self.db = client["gb_parse_16_02_2021"]
 
+    # def process_item(self, item, spider):
+    #     self.db[spider.name].insert_one(item)
+    #     return item
+
     def process_item(self, item, spider):
-        self.db[spider.name].insert_one(item)
+        self.db[type(item).__name__].insert_one(item)
         return item
 
 class GbImageDownloadPipeline(ImagesPipeline):
